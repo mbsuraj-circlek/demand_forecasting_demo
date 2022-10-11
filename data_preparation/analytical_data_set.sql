@@ -37,13 +37,14 @@ where
 
 -- COMMAND ----------
 
-select price_family, Product_Key, unit_price, week_end, count(unit_price) from circlek_db.suraj_demand_forecasting_demo
-where week_end = "2022-07-17"
-group by price_family, Product_Key, week_end, unit_price
-order by 1, 2, 3, 5 desc
+-- select price_family, Product_Key, unit_price, week_end, count(unit_price) from circlek_db.suraj_demand_forecasting_demo
+-- where week_end = "2022-07-17"
+-- group by price_family, Product_Key, week_end, unit_price
+-- order by 1, 2, 3, 5 desc
 
 -- COMMAND ----------
 
+create or replace table circlek_db.suraj_demand_forecast_agg_demo as 
 with quantity_amount_summary as (
 select
   price_family,
@@ -82,8 +83,8 @@ select
   qa.week_end,
   qa.total_quantity,
   qa.total_amount,
-  p.unit_price,
-  p.price_rank
+  p.unit_price
+--   p.price_rank
 from quantity_amount_summary qa
 inner join weekly_price_summ p on qa.price_family = p.price_family 
   and qa.week_end = p.week_end
@@ -91,7 +92,7 @@ where p.price_rank = 1
 
 -- COMMAND ----------
 
-select * from circlek_db.suraj_demand_forecasting_demo
+select * from circlek_db.suraj_demand_forecast_agg_demo
 
 -- COMMAND ----------
 
