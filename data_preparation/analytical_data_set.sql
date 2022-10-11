@@ -28,10 +28,19 @@ where
   t.Transaction_Type_Key in (2, 3)
   and t.6sig_outlier_score != 1
   and t.Promotion_Id = 0
-  and t.transaction_date between '2022-07-01' and '2022-07-26'
+  and t.transaction_date between '2017-07-01' and '2022-06-30'
   and s.division_desc = 'Central Division'
   and i.category_name = "Other Bevrgs (45)"
   and i.price_family = '710ML - SPORTS DRINKS - PEPSI - GATORADE'
+  and c.cluster = 1
+--   and t.unit_price = 3.29
+
+-- COMMAND ----------
+
+select price_family, Product_Key, unit_price, week_end, count(unit_price) from circlek_db.suraj_demand_forecasting_demo
+where week_end = "2022-07-17"
+group by price_family, Product_Key, week_end, unit_price
+order by 1, 2, 3, 5 desc
 
 -- COMMAND ----------
 
@@ -82,7 +91,7 @@ where p.price_rank = 1
 
 -- COMMAND ----------
 
-select * from dl_src_ck_datascience.transaction_item_details
+select * from circlek_db.suraj_demand_forecasting_demo
 
 -- COMMAND ----------
 
